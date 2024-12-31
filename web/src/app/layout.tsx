@@ -1,9 +1,9 @@
-"use server"
-
+"use client"
+import LoadingSpinner from '../components/LoadingSpinner';
 import TopBar from '@/components/topbar';
-import { Button } from '@/components/ui/button';
 import { Provider } from '@/components/ui/provider';
-import { createSystem, defineConfig } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
+
 import { ReactNode } from 'react';
 
 interface LayoutProps {
@@ -12,14 +12,20 @@ interface LayoutProps {
 
 
 const Layout = ({ children }: LayoutProps) => {
+
+
   return (
     <html suppressHydrationWarning>
       <head />
       <body>
         <Provider>
-        <TopBar />
-          {children}
-          </Provider>
+          <TopBar />
+          <Flex direction="column" align="center" justify="center" minH="100vh">
+            <Box width="100%" maxW="container.md" p={4}>
+              {children}
+            </Box>
+          </Flex>
+        </Provider>
       </body>
     </html>
   );
