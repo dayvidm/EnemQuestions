@@ -1,11 +1,11 @@
-// import { ChakraProvider } from '@chakra-ui/react';
+import { Provider } from "@/components/ui/provider"
 import { AppProps } from 'next/app';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
-        // <ChakraProvider>
+        <Provider >
             <Component {...pageProps} />
-        // </ChakraProvider>
+        </Provider> 
     );
 }
 

@@ -1,12 +1,28 @@
-import { Provider } from "@/components/ui/provider"
+"use server"
 
-export default function RootLayout(props: { children: React.ReactNode }) {
-  const { children } = props
+import TopBar from '@/components/topbar';
+import { Button } from '@/components/ui/button';
+import { Provider } from '@/components/ui/provider';
+import { createSystem, defineConfig } from '@chakra-ui/react';
+import { ReactNode } from 'react';
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+
+const Layout = ({ children }: LayoutProps) => {
   return (
     <html suppressHydrationWarning>
+      <head />
       <body>
-        <Provider>{children}</Provider>
+        <Provider>
+        <TopBar />
+          {children}
+          </Provider>
       </body>
     </html>
-  )
-}
+  );
+};
+
+export default Layout;

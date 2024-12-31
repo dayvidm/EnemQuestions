@@ -1,11 +1,11 @@
-:root {
+/* :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #f80d0d;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #ff0d0d;
     --foreground: #ededed;
   }
 }
@@ -35,8 +35,8 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   html {
-    color-scheme: dark;
+    color-scheme: light dark;
   }
-}
+} */
