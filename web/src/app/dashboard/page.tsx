@@ -1,7 +1,6 @@
 "use client";
 
-import { Radio, RadioGroup } from "@/components/ui/radio";
-import { HStack } from "@chakra-ui/react";
+
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/auth'
@@ -24,11 +23,18 @@ const Dashboard = () => {
   const titleCardRapido = "Simulado Rápido";
   const descriptionCardRapido = "Nesta opção voce pode realizar um simulado com 10 questões aleatorias e de qualquer materia. Não há limite de tempo para a realização do simulado.";
 
+  const handleStartSimuladoPadrao = () => {
+    router.push('/question?type=padrao');
+  };
+
+  const handleStartSimuladoRapido = () => {
+    router.push('/question?type=rapido');
+  };
+
   return (
     <>
-      <CardComponent title={titleCardPadrao} description={descriptionCardPadrao} buttonText2="Iniciar Simulado"/>
-      <CardComponent title={titleCardRapido} description={descriptionCardRapido} buttonText2="Iniciar Simulado"/>
-      {/* <CardComponent title={titleCard} description={descriptionCard} buttonText2="Iniciar Simulado"/> */}
+      <CardComponent title={titleCardPadrao} description={descriptionCardPadrao} buttonText2="Iniciar Simulado" onClick={() => { alert('yrdyr') }} />
+      <CardComponent title={titleCardRapido} description={descriptionCardRapido} buttonText2="Iniciar Simulado" onClick={handleStartSimuladoRapido} />
     </>
   );
 };
