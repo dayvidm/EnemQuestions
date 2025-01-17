@@ -16,12 +16,19 @@ class EnsureEmailIsVerified
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! $request->user() ||
-            ($request->user() instanceof MustVerifyEmail &&
-            ! $request->user()->hasVerifiedEmail())) {
-            return response()->json(['message' => 'Your email address is not verified.'], 409);
-        }
+        // if (! $request->user() ||
+        //     ($request->user() instanceof MustVerifyEmail &&
+        //     ! $request->user()->hasVerifiedEmail())) {
+        //     return response()->json(['message' => 'Your email address is not verified.'], 409);
+        // }
 
-        return $next($request);
+        // return $next($request);
+        return $next($request)
+        ->header('Access-Control-Allow-Origin', '*')
+        ->header('Access-Control-Allow-Methods', '*')
+        ->header('Access-Control-Allow-Credentials', true)
+        ->header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,X-Token-Auth,Authorization')
+        ->header('Accept', 'application/json')
+        ;
     }
 }

@@ -1,28 +1,27 @@
 FROM php:8.2-fpm
 
-# Instalar dependências necessárias
+# Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     zip \
     unzip \
     git \
     curl \
-    libpq-dev \
     && docker-php-ext-install pdo_pgsql
 
-# Instalar o Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Instalar Composer
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 # Definir o diretório de trabalho
 WORKDIR /var/www/html
 
-# Copiar arquivos do projeto para o container
+# Copiar todos os arquivos do projeto
 COPY . .
 
-# Instalar as dependências do Composer
-RUN composer install --no-dev --optimize-autoloader
+# Instalar dependências do Composer
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
 
-# Corrigir permissões
+# Configurar permissões
 RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
 # Expor a porta

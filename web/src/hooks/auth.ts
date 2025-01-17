@@ -31,7 +31,7 @@ const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthParams = {}) =>
 
     const csrf = async () => {
         try {
-            await axios.get('http://localhost:8000/sanctum/csrf-cookie', {
+            await axios.get('http://localhost:8080/sanctum/csrf-cookie', {
                 withCredentials: true,
             });
         } catch (error) {

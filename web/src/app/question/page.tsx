@@ -1,26 +1,28 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import axios from 'axios';
 import QuestionComponent from '@/components/QuestionComponent';
-
-const questions = [
-  {
-    textoPergunta: "Quanto é 1 + 1?",
-    opcoesPergunta: ["2", "3", "4", "5"],
-    respostaCorreta: "2",
-  },
-  {
-    textoPergunta: "Quanto é 1 + 3?",
-    opcoesPergunta: ["15", "20", "4", "55"],
-    respostaCorreta: "4",
-  },
-];
 
 const Question = () => {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
+  const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<string[]>(Array(questions.length).fill(''));
+  const [answers, setAnswers] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/test');
+        setQuestions(response.data.questions);
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
@@ -39,6 +41,10 @@ const Question = () => {
     updatedAnswers[currentQuestionIndex] = answer;
     setAnswers(updatedAnswers);
   };
+
+  if (questions.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
