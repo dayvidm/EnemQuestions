@@ -52,9 +52,9 @@ class ExamSeeder extends Seeder
                 ]);
             }
 
-            // Aqui você adiciona a lógica para salvar as questões e alternativas
+            // Salva as questões
             foreach ($examData['questions'] as $questionData) {
-                // Cria a questão associada ao exame
+               
                 $question = Question::create([
                     'title' => $questionData['title'],
                     'index' => $questionData['index'],
