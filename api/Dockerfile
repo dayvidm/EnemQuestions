@@ -1,31 +1,32 @@
 FROM php:8.2-fpm
 
-# Instalar dependências do sistema
+# Instalar dependências necessárias
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     zip \
     unzip \
     git \
     curl \
-    && docker-php-ext-install pdo pdo_pgsql
+    libpq-dev \
+    && docker-php-ext-install pdo_pgsql
 
-# Instalar Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+# Instalar o Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Definir diretório de trabalho
+# Definir o diretório de trabalho
 WORKDIR /var/www/html
 
-# Copiar arquivos do projeto
+# Copiar arquivos do projeto para o container
 COPY . .
 
-# Copiar o arquivo .env.example para .env
-RUN cp .env.example .env
-
-# Instalar dependências do Laravel
+# Instalar as dependências do Composer
 RUN composer install --no-dev --optimize-autoloader
 
-# Definir permissões
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+# Corrigir permissões
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
 
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Expor a porta
+EXPOSE 9000
+
+# Comando padrão
+CMD ["php-fpm"]

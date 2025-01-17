@@ -15,21 +15,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): Response
     {
-        return response()->json([
-            'message' => 'tnc.',
-            'errors' => ['email' => ['tnc.']],
-        ], 422);
-        // Verifique se a autenticação está correta
-        // if (!Auth::attempt($request->only('email', 'password'))) {
-        //     return response()->json([
-        //         'message' => 'These credentials do not match our records.',
-        //         'errors' => ['email' => ['These credentials do not match our records.']],
-        //     ], 422);
-        // }
+        $request->authenticate();
 
-        // $request->session()->regenerate();
+        $request->session()->regenerate();
 
-        // return response()->noContent();
+        return response()->noContent();
     }
 
     /**
