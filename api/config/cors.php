@@ -15,40 +15,13 @@ return [
     |
     */
 
-    // 'paths' => ['*'],
-
-    // 'allowed_methods' => ['*'],
-
-    // 'allowed_origins' => ['http://localhost:3000'],
-
-    // 'allowed_origins_patterns' => [],
-
-    // // 'allowed_headers' => ['Content-Type', 'X-XSRF-TOKEN', 'Authorization', 'X-Requested-With', 'X-Custom-Header', 'Accept'],
-    // 'allowed_headers' => ['*'],
-
-    // 'exposed_headers' => [],
-
-    // 'max_age' => 0,
-
-    // 'supports_credentials' => true,
-
-    'paths' => [
-        'api/*' => [
-            'origin' => ['http://localhost:3000'],
-            'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-            'headers' => ['Content-Type', 'Authorization'],
-            'exposed_headers' => [],
-            'max_age' => 0,
-            'credentials' => true,
-        ],
-        'sanctum/csrf-cookie' => [
-            'origin' => ['http://localhost:3000'],
-            'methods' => ['GET'],
-            'headers' => [],
-            'exposed_headers' => [],
-            'max_age' => 0,
-            'credentials' => true,
-        ],
-    ],
+        'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout','register'], // adicione o caminho para o login
+        'allowed_methods' => ['*'],
+        'allowed_origins' => ['http://localhost:3000'], // Permite o front-end
+        'allowed_headers' => ['*'],
+        'exposed_headers' => [],
+        'max_age' => 0,
+        'supports_credentials' => true,
+    
 
 ];
