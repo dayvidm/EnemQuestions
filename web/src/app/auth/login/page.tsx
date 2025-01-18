@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams,useRouter } from 'next/navigation';
 import { Box, Button, Input, Heading } from '@chakra-ui/react';
 import useAuth from '@/hooks/auth';
 import AuthSessionStatus from '../AuthSessionStatus';
@@ -8,6 +8,7 @@ import InputError from '@/components/InputError';
 
 const Login = () => {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const { login } = useAuth({
         middleware: 'guest',
         redirectIfAuthenticated: '/dashboard',
@@ -56,6 +57,14 @@ const Login = () => {
                 />
                 <InputError messages={errors.password} className="mt-2" />
                 <Button type="submit" colorScheme="teal" width="full">Login</Button>
+                <Button
+                    colorScheme="teal"
+                    width="full"
+                    variant="outline"
+                    onClick={() => router.push('/auth/register')}
+                >
+                    Register
+                </Button>
             </form>
         </Box>
     );

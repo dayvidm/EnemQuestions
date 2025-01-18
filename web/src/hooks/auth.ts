@@ -142,7 +142,7 @@ const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthParams = {}) =>
             await axios.post('/logout');
             mutate();
         }
-        router.push('/login');
+        router.push('/auth/login');
     };
 
     useEffect(() => {

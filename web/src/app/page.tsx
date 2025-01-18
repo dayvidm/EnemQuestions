@@ -61,6 +61,14 @@ const Login = () => {
                 <Button type="submit" colorScheme="teal" width="full">
                     Login
                 </Button>
+                <Button
+                    colorScheme="teal"
+                    width="full"
+                    variant="outline"
+                    onClick={() => router.push('/auth/register')}
+                >
+                    Register
+                </Button>
             </form>
         </Box>
     );
