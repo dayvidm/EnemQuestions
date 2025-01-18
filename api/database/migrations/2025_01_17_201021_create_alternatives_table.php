@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('alternatives', function (Blueprint $table) {
             $table->id();
             $table->string('letter');
-            $table->text('text');
+            $table->text('text')->nullable();
             $table->boolean('isCorrect');
             $table->foreignId('question_id')->constrained('questions'); // Relacionamento com a tabela questions
             $table->timestamps();

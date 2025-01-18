@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->integer('index');
             $table->string('discipline');
-            $table->string('language');
-            $table->text('context');
+            $table->string('language')->nullable();
+            $table->text('context')->nullable();
             $table->foreignId('exam_id')->constrained('exams'); // Relacionamento com a tabela exams
             $table->timestamps();
         });
