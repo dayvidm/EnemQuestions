@@ -8,6 +8,7 @@ use App\Models\Discipline;
 use App\Models\Language;
 use App\Models\Question;
 use App\Models\Alternative;
+use App\Models\QuestionFile;
 
 class ExamSeeder extends Seeder
 {
@@ -81,12 +82,22 @@ class ExamSeeder extends Seeder
                         'exam_id' => $exam->id,
                     ]);
 
+                    if (count($questionData['files']) > 0) {
+                        foreach ($questionData['files'] as $file) {
+                            QuestionFile::create([
+                                'file' => $file,
+                                'question_id' => $question->id,
+                            ]);
+                        }
+                    }
+
                     // Salva as alternativas da questão
                     foreach ($questionData['alternatives'] as $alternativeData) {
                         Alternative::create([
                             'letter' => $alternativeData['letter'],
                             'text' => $alternativeData['text'],
                             'isCorrect' => $alternativeData['isCorrect'],
+                            'file' => $alternativeData['file'],
                             'question_id' => $question->id,
                         ]);
                     }
