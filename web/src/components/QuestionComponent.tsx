@@ -1,10 +1,24 @@
 import { Box, Button, Stack, Text } from '@chakra-ui/react';
 import { Radio, RadioGroup } from './ui/radio';
 
+// create a type alternative usig
+
+type Alternative = {
+  id: number;
+  letter: string;
+  text: string;
+  file: string | null;
+  isCorrect: boolean;
+  question_id: number;
+  created_at: string; // ISO 8601 date string
+  updated_at: string; // ISO 8601 date string
+};
+
+
 interface QuestionProps {
   question: {
-    textoPergunta: string;
-    opcoesPergunta: string[];
+    context: string;
+    aternatives: Alternative[];
   };
   selectedOption: string;
   onAnswerChange: (answer: string) => void;
@@ -30,16 +44,16 @@ const QuestionComponent = ({
       mt={8}
     >
       <Text fontSize="xl" mb={4} textAlign="center">
-        {question.textoPergunta}
+        {question.context}
       </Text>
       <RadioGroup
         value={selectedOption}
         onChange={(e) => onAnswerChange((e.target as HTMLInputElement).value)} // Ajuste aqui
       >
         <Stack direction="column">
-          {question.opcoesPergunta.map((opcao, index) => (
-            <Radio key={index} value={opcao}>
-              {opcao}
+          {question.alternatives.map(({letter, text, id}) => (
+            <Radio key={id} value={letter}>
+              {text}
             </Radio>
           ))}
         </Stack>

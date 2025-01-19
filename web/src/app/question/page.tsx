@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import axios from 'axios';
+import axios from '../../../utils/axios';
 import QuestionComponent from '@/components/QuestionComponent';
 
 const Question = () => {
@@ -14,8 +14,8 @@ const Question = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/test');
-        setQuestions(response.data.questions);
+        const response = await axios.get('http://localhost:8080/api/questions/random?limit=10');
+        setQuestions(response.data);
       } catch (error) {
         console.error('Error fetching questions:', error);
       }
