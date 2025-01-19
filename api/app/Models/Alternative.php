@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alternative extends Model
 {
-    protected $fillable = ['letter', 'text', 'isCorrect', 'question_id'];
+    protected $fillable = ['letter', 'text', 'isCorrect', 'file', 'question_id'];
 
     public function question()
     {

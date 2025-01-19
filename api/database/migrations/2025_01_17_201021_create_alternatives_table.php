@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('letter');
             $table->text('text')->nullable();
+            $table->string('file')->nullable();
             $table->boolean('isCorrect');
             $table->foreignId('question_id')->constrained('questions'); // Relacionamento com a tabela questions
             $table->timestamps();
