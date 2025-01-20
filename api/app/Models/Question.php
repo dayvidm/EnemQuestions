@@ -17,5 +17,10 @@ class Question extends Model
     {
         return $this->hasMany(Alternative::class);
     }
+
+    public function questionFile()
+    {
+        return $this->hasOne(QuestionFile::class);
+    }	
 }
 

@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Image, Stack, Text } from '@chakra-ui/react';
 import { Radio, RadioGroup } from './ui/radio';
 
 // create a type alternative usig
@@ -51,9 +51,12 @@ const QuestionComponent = ({
         onChange={(e) => onAnswerChange((e.target as HTMLInputElement).value)} // Ajuste aqui
       >
         <Stack direction="column">
-          {question.alternatives.map(({letter, text, id}) => (
+          {question.alternatives.map(({ letter, text, id, file }) => (
             <Radio key={id} value={letter}>
-              {text}
+              <Box>
+                {text && <Text mb={2}>{text}</Text>}
+                {file && <Image src={file} alt={`Alternative ${letter}`} />}
+              </Box>
             </Radio>
           ))}
         </Stack>

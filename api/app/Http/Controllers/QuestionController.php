@@ -11,7 +11,8 @@ class QuestionController extends Controller
     public function fetchRandom(Request $request)
     {
         $limit = $request->query('limit', 1);
-       return Question::with('alternatives')
+        return Question::with('alternatives')
+            ->with('questionFile')
             ->inRandomOrder()
             ->limit($limit)
             ->get();
