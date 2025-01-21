@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Question;
 use App\Models\Alternative;
 use App\Models\QuestionFile;
+use Exception;
 
 class ExamSeeder extends Seeder
 {
@@ -53,9 +54,13 @@ class ExamSeeder extends Seeder
                 ]);
             }
 
-
             $year = $examData['year'];
             $offset = 0;
+
+            $maxRetries = 5; // Número máximo de tentativas
+            $retryDelay = 100; // Atraso inicial em milissegundos
+            $retryCount = 0;
+
             do {
                 $curl = curl_init();
                 curl_setopt_array($curl, [
@@ -67,18 +72,35 @@ class ExamSeeder extends Seeder
                 ]);
                 $response = curl_exec($curl);
                 curl_close($curl);
+
+                if ($response === false) {
+                    throw new Exception("Erro na requisição CURL: " . curl_error($curl));
+                }
+
                 $questions = json_decode($response, true);
+                if (isset($questions['error']['code']) && $questions['error']['code'] === 'rate_limit_exceeded') {
+                    $retryCount++;
+                    usleep($retryDelay * 1000); // Converte para microssegundos
+                    $retryDelay *= 2; // Aumenta o atraso exponencialmente
+                    continue; // Tenta novamente
+                }
+
+                if (!is_array($questions) || !isset($questions['metadata']) || !isset($questions['questions'])) {
+                    dump($response); // Depuração: mostra a resposta da API
+                    throw new Exception("Resposta inválida ou estrutura inesperada ao buscar questões do ano {$year} e offset {$offset}.");
+                }
+
                 $hasDone = $questions['metadata']['hasMore'];
 
                 // Salva as questões
                 foreach ($questions['questions'] as $questionData) {
-
                     $question = Question::create([
                         'title' => $questionData['title'],
                         'index' => $questionData['index'],
                         'discipline' => $questionData['discipline'],
                         'language' => $questionData['language'],
                         'context' => $questionData['context'],
+                        'alternativesIntroduction' => $questionData['alternativesIntroduction'],
                         'exam_id' => $exam->id,
                     ]);
 
@@ -102,7 +124,12 @@ class ExamSeeder extends Seeder
                         ]);
                     }
                 }
+
                 $offset += 50;
+                // Verifica se o número máximo de tentativas foi alcançado
+                if ($retryCount >= $maxRetries) {
+                    throw new Exception("Número máximo de tentativas atingido ao buscar questões do ano {$year} e offset {$offset}.");
+                }
             } while ($hasDone == true);
         }
     }

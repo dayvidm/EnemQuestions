@@ -17,7 +17,8 @@ return new class extends Migration
             $table->integer('index');
             $table->string('discipline');
             $table->string('language')->nullable();
-            $table->text('context')->nullable();
+            $table->text('context')->nullable(); //é o enunciado da questão
+            $table->text('alternativesIntroduction')->nullable(); //é a introdução das alternativas
             $table->foreignId('exam_id')->constrained('exams'); // Relacionamento com a tabela exams
             $table->timestamps();
         });
