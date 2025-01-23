@@ -30,6 +30,8 @@ const Register = () => {
         });
     };
 
+
+    
     return (
         <Box maxW="sm" mx="auto" mt={10} p={5} borderWidth={1} borderRadius="lg">
             <Heading mb={6}>Register</Heading>
