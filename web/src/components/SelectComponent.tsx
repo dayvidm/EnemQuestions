@@ -17,19 +17,9 @@ interface SelectComponentProps {
 }
 
 const SelectComponent = ({ label, options, placeholder, value, onChange, multiple = false }: SelectComponentProps) => {
-  const handleChange = (selectedValue: string | number | (string | number)[]) => {
-    if (multiple) {
-      // Se for múltipla seleção, assegura que o valor seja sempre um array
-      onChange(Array.isArray(selectedValue) ? selectedValue : []);
-    } else {
-      // Se for uma única seleção, retorna o valor diretamente
-      onChange(selectedValue);
-    }
-  };
-
   return (
     <div>
-      <SelectRoot multiple={multiple} value={value} onValueChange={handleChange}>
+      <SelectRoot multiple={multiple} value={value} onValueChange={onChange}>
         <SelectLabel>{label}</SelectLabel>
         <SelectTrigger>
           <SelectValueText placeholder={placeholder} />

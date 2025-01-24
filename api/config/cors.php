@@ -15,7 +15,7 @@ return [
     |
     */
 
-        'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout','register'], // adicione o caminho para o login
+        'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout','register','/*'], // adicione o caminho para o login
         'allowed_methods' => ['*'],
         'allowed_origins' => ['http://localhost:3000'], // Permite o front-end
         'allowed_headers' => ['*'],

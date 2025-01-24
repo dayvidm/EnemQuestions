@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { Box, Button, Input, Heading, Link, Text } from '@chakra-ui/react';
 import useAuth from '@/hooks/auth';
 import InputError from '@/components/InputError';
+import CourseSelector from '@/components/CourseSelector';
 
 const Register = () => {
     const router = useRouter();
@@ -72,6 +73,7 @@ const Register = () => {
                     />
                     <InputError messages={errors.password_confirmation} className="mt-2" />
                 </Box>
+                <CourseSelector />
                 <Box display="flex" alignItems="center" justifyContent="space-between" mt={4}>
                     <Link href="/login" color="teal.500">
                         Already registered?
