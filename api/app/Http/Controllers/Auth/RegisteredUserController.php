@@ -20,11 +20,11 @@ class RegisteredUserController extends Controller
             'courses' => 'required|array',
             'courses.*' => 'exists:courses,id',
         ]);
-
+        
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

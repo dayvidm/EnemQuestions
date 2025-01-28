@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { useSearchParams,useRouter } from 'next/navigation';
-import { Box, Button, Input, Heading } from '@chakra-ui/react';
+import { Box, Input, Heading } from '@chakra-ui/react';
+import { Button } from '../../../components/ui/button';
 import useAuth from '@/hooks/auth';
 import AuthSessionStatus from '../AuthSessionStatus';
 import InputError from '@/components/InputError';
@@ -19,6 +20,7 @@ const Login = () => {
     const [shouldRemember, setShouldRemember] = useState(false);
     const [errors, setErrors] = useState([]);
     const [status, setStatus] = useState(null);
+  const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const reset = searchParams.get('reset');
@@ -27,17 +29,35 @@ const Login = () => {
         }
     }, [searchParams]);
 
+    // const submitForm = async (event) => {
+    //     setLoading(true);
+    //     event.preventDefault();
+    //     login({
+    //         email,
+    //         password,
+    //         remember: shouldRemember,
+    //         setErrors,
+    //         setStatus,
+    //     });
+    // };
     const submitForm = async (event) => {
         event.preventDefault();
-        login({
-            email,
-            password,
-            remember: shouldRemember,
-            setErrors,
-            setStatus,
-        });
+        setLoading(true); // Ativa o estado de carregamento
+    
+        try {
+            await login({
+                email,
+                password,
+                remember: shouldRemember,
+                setErrors,
+                setStatus,
+            });
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false); // Desativa o estado de carregamento após a requisição
+        }
     };
-
     return (
         <Box maxW="sm" mx="auto" mt={10} p={5} borderWidth={1} borderRadius="lg">
             <AuthSessionStatus className="mb-4" status={status} />
@@ -56,7 +76,7 @@ const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <InputError messages={errors.password} className="mt-2" />
-                <Button type="submit" colorScheme="teal" width="full">Login</Button>
+                <Button type="submit" colorScheme="teal" width="full" loading={loading}>Login</Button>
                 <Button
                     colorScheme="teal"
                     width="full"

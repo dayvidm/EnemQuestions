@@ -2,10 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from '../../../../utils/axios';
-import { Box, Button, Input, Text, Link } from '@chakra-ui/react';
+import { Box, Input, Text, Link } from '@chakra-ui/react';
+import { Button } from '../../../components/ui/button';
 import InputError from '@/components/InputError';
 import CourseSelector from '@/components/CourseSelector';
+import axiosInstance from '../../../../utils/axios';
 
 const Register = () => {
   const router = useRouter();
@@ -15,12 +16,13 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
-
+    setLoading(true);
     try {
-      await axios.post('/register', {
+      await axiosInstance.post('/register', {
         name,
         email,
         password,
@@ -34,9 +36,12 @@ const Register = () => {
       } else {
         console.error('Error registering:', error);
       }
+    } finally { 
+      setLoading(false);
     }
-  };
 
+  };
+ 
   return (
     <Box maxW="sm" mx="auto" mt={10} p={5} borderWidth={1} borderRadius="lg">
       <form onSubmit={handleRegister}>
@@ -81,7 +86,7 @@ const Register = () => {
           <Link href="/login" color="teal.500">
             Already registered?
           </Link>
-          <Button type="submit" colorScheme="teal" ml={4}>
+          <Button type="submit" colorScheme="teal" ml={4} loading={loading}>
             Register
           </Button>
         </Box>

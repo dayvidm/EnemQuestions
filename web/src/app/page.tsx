@@ -58,7 +58,7 @@ const Login = () => {
                     mb={3}
                 />
                 <InputError messages={errors} className="mt-2" />
-                <Button type="submit" colorScheme="teal" width="full">
+                <Button type="submit" colorScheme="teal" width="full" >
                     Login
                 </Button>
                 <Button

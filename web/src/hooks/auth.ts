@@ -60,23 +60,19 @@ const useAuth = ({ middleware, redirectIfAuthenticated }: UseAuthParams = {}) =>
     // };
 
     const register = async ({ setErrors, ...props }: AuthProps) => {
-        // Garantir que o token CSRF seja obtido antes da requisição
         await csrf();
 
-        setErrors([]);  // Limpar erros anteriores
+        setErrors([]); 
 
         try {
-            // Enviar a requisição POST com os dados do usuário
             await axios.post('/register', props, {
                 headers: {
-                    'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')  // Incluir o token CSRF no cabeçalho
+                    'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')  
                 }
             });
 
-            // Realizar a mutação após o sucesso da requisição
             mutate();
         } catch (error: any) {
-            // Tratar os erros
             handleError(error, setErrors);
         }
     };
