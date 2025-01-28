@@ -1,15 +1,25 @@
 "use client"
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
 import useAuth from '@/hooks/auth';
+import { useState } from "react";
 
 function TopBar() {
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
     const { user, logout } = useAuth();
 
     const handleLogout = async () => {
-        await logout();
-        router.push('/login');
+        setLoading(true); // Ativar o estado de carregamento
+        try {
+            await logout();
+            router.push('/login');
+        } catch (error) {
+            console.error("Erro ao fazer logout:", error);
+        } finally {
+            setLoading(false); // Desativar o estado de carregamento
+        }
     };
 
     return (
@@ -23,7 +33,7 @@ function TopBar() {
                             <Button colorScheme="teal" onClick={handleLogout}>Logout</Button>
                         </>
                     ) : (
-                        <Button colorScheme="teal" onClick={() => router.push('/auth/login')}>Login</Button>
+                        <Button colorScheme="teal" onClick={() => router.push('/auth/login')} loading={loading}>Login</Button>
                     )}
                 </Box>
             </Flex>
