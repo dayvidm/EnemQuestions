@@ -1,5 +1,6 @@
 # EnemQuestions
 
+- PHPStorm - VisualStudio - Dbeaver - DockerDesktop
 - Para subir o ambiente, é necessário ter o nodeJS instalado.
 - se estiver usando windows necessário ter o o docker desktop instalado. 
 
@@ -15,4 +16,6 @@ backend
 
 frontend 
 - entre na pasta web 'cd web'
-- execute o comando 'npm run dev'
+- necessario ter node instalado
+- dentro da pasta 'web' execute o comando 'npm install'
+- após instalação execute o comando 'npm run dev'
